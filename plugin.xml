@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="leang.phonegap.textarea"
+        version="0.0.1">
+
+  <name>TextArea</name>
+  <description>A Phonegap solution to Sencha Touch 2.3's TextArea using native components for iOS and Android</description>
+  <license>MIT</license>
+
+  <engines>
+    <engine name="cordova" version=">=2.9.0" />
+  </engines>
+  <js-module src="www/TextArea.js" name="TextArea">
+    <clobbers target="window.admob"/>
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="TextArea">
+        <param name="android-package" value="leang.phonegap.textarea"/>
+      </feature>
+    </config-file>
+
+    <!--  source files -->
+    <source-file src="src/android/TextArea.java" target-dir="leang/phonegap/textarea" />
+
+    <!--  drawable src/android/resources -->
+    <resource-file src="src/android/res/drawable-hdpi/ic_launcher.png" target="res/drawable-hdpi/ic_launcher.png" />
+    <resource-file src="src/android/res/drawable-mdpi/ic_launcher.png" target="res/drawable-mdpi/ic_launcher.png" />
+    <resource-file src="src/android/res/drawable-xhdpi/ic_launcher.png" target="res/drawable-xhdpi/ic_launcher.png" />
+    <resource-file src="src/android/res/drawable-xxhdpi/ic_launcher.png" target="res/drawable-xxhdpi/ic_launcher.png" />
+    <resource-file src="src/android/res/layout/activity_text_area.xml" target="res/layout/activity_text_area.xml" />
+    <resource-file src="src/android/res/menu/text_area.xml" target="res/menu/text_area.xml" />
+
+  </platform>
+
+</plugin>
