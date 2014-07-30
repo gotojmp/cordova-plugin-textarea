@@ -12,7 +12,7 @@
     <engine name="cordova" version=">=2.9.0" />
   </engines>
   <js-module src="www/TextArea.js" name="TextArea">
-    <clobbers target="window.admob"/>
+    <clobbers target="window.plugins.textarea"/>
   </js-module>
 
   <!-- android -->
