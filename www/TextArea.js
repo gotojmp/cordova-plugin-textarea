@@ -12,7 +12,7 @@ TextArea.install = function () {
     window.plugins = {};
   }
 
-  window.plugins.pocketsave = new TextArea();
+  window.plugins.textarea = new TextArea();
   return window.plugins.textarea;
 };
 
