@@ -21,7 +21,7 @@ public class TextArea extends CordovaPlugin {
 	public boolean execute(String action, JSONArray inputs, CallbackContext callbackContext) throws JSONException {
 
 	  if(action.equals(OPEN_TEXT_VIEW)) {
-	    launchTextView(inputs, CallbackContext);
+	    launchTextView(inputs, callbackContext);
 	  }
 	  else {
 	    callbackContext.error("Invalid Action: " + action);
