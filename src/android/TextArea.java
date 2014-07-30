@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.widget.Toast;
 
-public class AdMobPlugin extends CordovaPlugin {
+public class TextArea extends CordovaPlugin {
 
     // cordova Actions
     private static final String OPEN_TEXT_VIEW = "openTextView";
