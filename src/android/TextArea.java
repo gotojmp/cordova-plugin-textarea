@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class AdMobPlugin extends CordovaPlugin {
 
     // cordova Actions
-    private static final String OPEN_TEXT_VIEW = "openTextView"
+    private static final String OPEN_TEXT_VIEW = "openTextView";
 
     // Main method for Cordova plugins
     @Override
