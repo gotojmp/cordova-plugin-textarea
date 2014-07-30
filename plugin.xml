@@ -24,7 +24,7 @@
     </config-file>
 
     <!--  source files -->
-    <source-file src="src/android/TextArea.java" target-dir="leang/phonegap/textarea" />
+    <source-file src="src/android/TextArea.java" target-dir="src/leang/phonegap/textarea" />
 
     <!--  drawable src/android/resources -->
     <resource-file src="src/android/res/drawable-hdpi/ic_launcher.png" target="res/drawable-hdpi/ic_launcher.png" />
