@@ -3,8 +3,8 @@ function TextArea() {
 
 }
 
-TextArea.prototype.openTextView = function(titleString, confirmButtonString, placeHolderString, successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "TextArea", "openTextView", [titleString, confirmButtonString, placeHolderString]);
+TextArea.prototype.openTextView = function(titleString, confirmButtonString, cancelButtonString, placeHolderString, bodyText, successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "TextArea", "openTextView", [titleString, confirmButtonString, cancelButtonString, placeHolderString, bodyText]);
 }
 
 TextArea.install = function () {
