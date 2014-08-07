@@ -7,42 +7,104 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import android.content.Context;
-import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
+import android.widget.LinearLayout;
+import android.widget.EditText;
+import android.graphics.Color;
 import android.view.Gravity;
+import android.view.WindowManager;
+
 
 public class TextArea extends CordovaPlugin {
-
+  
   // cordova Actions
   private static final String OPEN_TEXT_VIEW = "openTextView";
-
+  
+  private static final String WHITE_COLOR = "#00000000";
+  private static final String BLACK_COLOR = "#FF000000";
+  private EditText commentText;
+  
   // Main method for Cordova plugins
-    @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-
-    callbackContext.success("it works!");
+  @Override
+  public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    
+    if (action.equals(OPEN_TEXT_VIEW)) {
+      
+      try {
+        String title = args.getString(0);
+        String confirmMessage = args.getString(1);
+        String cancelMessage = args.getString(2);
+        String placeHolderMessage = args.getString(3);
+        String bodyMessage = args.getString(4);
+        
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_HOLO_LIGHT);
+        
+        alertDialogBuilder.setPositiveButton(confirmMessage, new DialogInterface.OnClickListener() {
+          
+          @Override
+          public void onClick(DialogInterface arg0, int arg1) {
+            String jsonString = "{\"status\" : \"success\",\"body\" : \"" + commentText.getText() + "\"}";
+            callbackContext.success(jsonString);
+          }
+        });
+        alertDialogBuilder.setNegativeButton(cancelMessage, new DialogInterface.OnClickListener() {
+          
+          @Override
+          public void onClick(DialogInterface arg0, int arg1) {
+            String jsonString = "{\"status\" : \"cancel\",\"body\" : \"" + commentText.getText() + "\"}";
+            callbackContext.success(jsonString);
+          }
+        });
+        
+        alertDialogBuilder.setTitle(title);
+        
+        AlertDialog createdDialog = alertDialogBuilder.create();
+        createdDialog.setView(theDialogView(placeHolderMessage, bodyMessage));
+        createdDialog.show();
+        createdDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+      }
+      catch (Exception e) {
+        callbackContext.error(e.toString());
+      }
+    }
+    
     return true;
-
-/*
-	  if(OPEN_TEXT_VIEW.equals(action)) {
-	    launchTextView(args, callbackContext);
-        return true;
-	  }
-	  else {
-	    callbackContext.error("Invalid Action: " + action);
-	  }
-      return false;
-      */
+    
   }
-
-  private void launchTextView(JSONArray args, CallbackContext callbackContext) {
-
-    android.widget.Toast toast = android.widget.Toast.makeText(webView.getContext(), "it works!", 0);
-    toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 20);
-    toast.setDuration(android.widget.Toast.LENGTH_LONG);
-    toast.show();
-    callbackContext.success("it works!");
-
+  
+  private LinearLayout theDialogView(String placeHolderMessage, String bodyMessage) {
+    
+    Context context = this.cordova.getActivity().getApplicationContext();
+    
+    LinearLayout linear = new LinearLayout(context);
+    linear.setOrientation(LinearLayout.VERTICAL);
+    LinearLayout.LayoutParams linearLP = new LinearLayout.LayoutParams(
+                                                                       LinearLayout.LayoutParams.FILL_PARENT,
+                                                                       LinearLayout.LayoutParams.FILL_PARENT
+                                                                       );
+    linear.setLayoutParams(linearLP);
+    
+    // Edit Text
+    commentText = new EditText(context);
+    LinearLayout.LayoutParams editTextLP = new LinearLayout.LayoutParams(
+                                                                         LinearLayout.LayoutParams.MATCH_PARENT,
+                                                                         LinearLayout.LayoutParams.MATCH_PARENT
+                                                                         );
+    commentText.setLayoutParams(editTextLP);
+    commentText.setHint(placeHolderMessage);
+    commentText.setText(bodyMessage);
+    commentText.setSelection(bodyMessage.length());
+    commentText.setGravity(Gravity.TOP);
+    commentText.setBackgroundColor(Color.parseColor(WHITE_COLOR));
+    commentText.setTextColor(Color.parseColor(BLACK_COLOR));
+    
+    // Add to main Linear Layout
+    linear.addView(commentText);
+    return linear;
+    
   }
+  
 }

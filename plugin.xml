@@ -22,18 +22,8 @@
         <param name="android-package" value="phonegap.leang.plugins.TextArea" />
       </feature>
     </config-file>
-
     <!--  source files -->
     <source-file src="src/android/TextArea.java" target-dir="src/phonegap/leang/plugins" />
-
-    <!--  drawable src/android/resources -->
-    <resource-file src="src/android/res/drawable-hdpi/ic_launcher.png" target="res/drawable-hdpi/ic_launcher.png" />
-    <resource-file src="src/android/res/drawable-mdpi/ic_launcher.png" target="res/drawable-mdpi/ic_launcher.png" />
-    <resource-file src="src/android/res/drawable-xhdpi/ic_launcher.png" target="res/drawable-xhdpi/ic_launcher.png" />
-    <resource-file src="src/android/res/drawable-xxhdpi/ic_launcher.png" target="res/drawable-xxhdpi/ic_launcher.png" />
-    <resource-file src="src/android/res/layout/activity_text_area.xml" target="res/layout/activity_text_area.xml" />
-    <resource-file src="src/android/res/menu/text_area.xml" target="res/menu/text_area.xml" />
-
   </platform>
 
 </plugin>
