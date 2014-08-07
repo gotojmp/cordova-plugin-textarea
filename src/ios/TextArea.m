@@ -28,6 +28,7 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+  UIColor *redColor = [UIColor colorWithRed:225/255.0 green:96/255.0 blue:84/255.0 alpha:1.0];
   
   cmd = command;
   titleString = command.arguments[0];
@@ -42,20 +43,29 @@
   
   // create view
   textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, viewController.view.frame.size.width, viewController.view.frame.size.height)];
+  
+  // load body for textView and add border
+  NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+  paragraphStyle.headIndent = 5.0;
+  paragraphStyle.firstLineHeadIndent = 5.0;
+  paragraphStyle.tailIndent = -5.0;
+  NSDictionary *attrsDictionary = @{NSFontAttributeName: [UIFont fontWithName:@"AppleSDGothicNeo-Medium" size:16], NSParagraphStyleAttributeName: paragraphStyle};
   [textView setDelegate:self];
+  [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [textView setTintColor:redColor];
   
   if ([bodyText isEqualToString:@""] || [bodyText isEqualToString:placeHolderString]) {
-    [textView setText:placeHolderString];
+    textView.attributedText = [[NSAttributedString alloc] initWithString:placeHolderString attributes:attrsDictionary];
     [textView setTextColor:[UIColor lightGrayColor]];
   }
   else {
-    [textView setText:bodyText];
+    textView.attributedText = [[NSAttributedString alloc] initWithString:bodyText attributes:attrsDictionary];
     [textView setTextColor:[UIColor blackColor]];
   }
   
   [viewController setTitle:titleString];
 
-  [navController.navigationBar setBarTintColor:[UIColor colorWithRed:225/255.0 green:96/255.0 blue:84/255.0 alpha:1.0]];
+  [navController.navigationBar setBarTintColor:redColor];
   UIBarButtonItem *cancelBarBtnItem = [[UIBarButtonItem alloc] initWithTitle:cancelButtonString style:UIBarButtonItemStylePlain target:self action:@selector(cancelBtnPressed:)];
   [cancelBarBtnItem setTintColor:[UIColor whiteColor]];
   UIBarButtonItem *confirmBarBtnItem = [[UIBarButtonItem alloc] initWithTitle:confirmButtonString style:UIBarButtonItemStylePlain target:self action:@selector(confirmBtnPressed:)];
@@ -77,7 +87,7 @@
   [self clearoutPlaceholder];
   [self.viewController dismissViewControllerAnimated:YES completion:^(void) {
     [self removeObservers];
-    NSString *escapeString = [textView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapeString = [self escapedString:textView.text];
     NSString *jsonString = [NSString stringWithFormat:@"{\"status\" : \"cancel\",\"body\" : \"%@\"}", escapeString];
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
     [self writeJavascript:[pluginResult toSuccessCallbackString:cmd.callbackId]];
@@ -88,11 +98,20 @@
   [self clearoutPlaceholder];
   [self removeObservers];
   [self.viewController dismissViewControllerAnimated:YES completion:^(void) {
-    NSString *escapeString = [textView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapeString = [self escapedString:textView.text];
     NSString *jsonString = [NSString stringWithFormat:@"{\"status\" : \"success\",\"body\" : \"%@\"}", escapeString];
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
     [self writeJavascript:[pluginResult toSuccessCallbackString:cmd.callbackId]];
   }];
+}
+
+- (NSString *) escapedString:(NSString *) text {
+  NSData *dataenc = [text dataUsingEncoding:NSUTF16StringEncoding];
+  NSString *escapeString = [[NSString alloc]initWithData:dataenc encoding:NSUTF16StringEncoding];
+  escapeString = [escapeString stringByReplacingOccurrencesOfString:@"\n" withString:@"%0A"];
+  escapeString = [escapeString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+  escapeString = [escapeString stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+  return escapeString;
 }
 
 - (void) clearoutPlaceholder {
@@ -136,6 +155,11 @@
 }
 
 - (void)moveTextViewForKeyboard:(NSNotification*)notification up:(BOOL)up {
+  
+  if ([UIApplication sharedApplication].statusBarOrientation != UIInterfaceOrientationPortrait) {
+    return;
+  }
+  
   NSDictionary *userInfo = [notification userInfo];
   NSTimeInterval animationDuration;
   UIViewAnimationCurve animationCurve;
