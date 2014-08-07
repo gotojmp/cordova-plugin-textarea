@@ -46,7 +46,8 @@ public class TextArea extends CordovaPlugin {
           
           @Override
           public void onClick(DialogInterface arg0, int arg1) {
-            String jsonString = "{\"status\" : \"success\",\"body\" : \"" + commentText.getText() + "\"}";
+            String escapeString = escapeText(commentText.getText().toString());
+            String jsonString = "{\"status\" : \"success\",\"body\" : \"" + escapeString + "\"}";
             callbackContext.success(jsonString);
           }
         });
@@ -54,7 +55,8 @@ public class TextArea extends CordovaPlugin {
           
           @Override
           public void onClick(DialogInterface arg0, int arg1) {
-            String jsonString = "{\"status\" : \"cancel\",\"body\" : \"" + commentText.getText() + "\"}";
+            String escapeString = escapeText(commentText.getText().toString());
+            String jsonString = "{\"status\" : \"cancel\",\"body\" : \"" + escapeString + "\"}";
             callbackContext.success(jsonString);
           }
         });
@@ -73,6 +75,13 @@ public class TextArea extends CordovaPlugin {
     
     return true;
     
+  }
+  
+  private String escapeText(String text) {
+    String escapeString = text.replace("\n", "%0A");
+    escapeString = escapeString.replace("\\", "\\\\");
+    escapeString = escapeString.replace("\"", "\\\"");
+    return escapeString;
   }
   
   private LinearLayout theDialogView(String placeHolderMessage, String bodyMessage) {
