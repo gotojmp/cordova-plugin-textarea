@@ -26,4 +26,17 @@
     <source-file src="src/android/TextArea.java" target-dir="src/phonegap/leang/plugins" />
   </platform>
 
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="TextArea">
+        <param name="ios-package" value="TextArea"/>
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/TextArea.h" />
+    <source-file src="src/ios/TextArea.m" />
+
+  </platform>
+
 </plugin>
