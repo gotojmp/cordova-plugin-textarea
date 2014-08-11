@@ -98,7 +98,11 @@
   [self clearoutPlaceholder];
   [self removeObservers];
   [self.viewController dismissViewControllerAnimated:YES completion:^(void) {
-    NSString *escapeString = [self escapedString:textView.text];
+    NSString *sendingString = @"";
+    if (![textView.text isEqualToString:placeHolderString]) {
+      sendingString = [textView.text copy];
+    }
+    NSString *escapeString = [self escapedString:sendingString];
     NSString *jsonString = [NSString stringWithFormat:@"{\"status\" : \"success\",\"body\" : \"%@\"}", escapeString];
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
     [self writeJavascript:[pluginResult toSuccessCallbackString:cmd.callbackId]];
