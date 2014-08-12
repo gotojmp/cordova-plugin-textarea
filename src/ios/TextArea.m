@@ -28,7 +28,7 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-  UIColor *redColor = [UIColor colorWithRed:225/255.0 green:96/255.0 blue:84/255.0 alpha:1.0];
+  UIColor *redColor = [UIColor colorWithRed:(216/255.0) green:(73/255.0) blue:(67/255.0) alpha:1];
   
   cmd = command;
   titleString = command.arguments[0];
