@@ -90,7 +90,7 @@
     NSString *escapeString = [self escapedString:textView.text];
     NSString *jsonString = [NSString stringWithFormat:@"{\"status\" : \"cancel\",\"body\" : \"%@\"}", escapeString];
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-    [self writeJavascript:[pluginResult toSuccessCallbackString:cmd.callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:cmd.callbackId];
   }];
 }
 
@@ -105,7 +105,7 @@
     NSString *escapeString = [self escapedString:sendingString];
     NSString *jsonString = [NSString stringWithFormat:@"{\"status\" : \"success\",\"body\" : \"%@\"}", escapeString];
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonString];
-    [self writeJavascript:[pluginResult toSuccessCallbackString:cmd.callbackId]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:cmd.callbackId];
   }];
 }
 
