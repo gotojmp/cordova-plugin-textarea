@@ -1,14 +1,14 @@
-##TextArea-PhoneGap
+##Cordova-Plugin-TextArea
 =================
 
-#####A Phonegap plugin textarea solution to Sencha Touch 2.3's TextArea using native components for iOS and Android
+#####A cordova plugin textarea solution using native components for iOS and Android
 
 ####Installation
 
-`phonegap plugin add https://github.com/vleango/TextArea-PhoneGap.git`
+`cordova plugin add https://github.com/gotojmp/cordova-plugin-textarea.git`
 
 ####Usage
 
 ```
-window.plugins.textarea.openTextView(titleString, confirmButtonString, cancelButtonString, placeHolderString, bodyText, successCallback, errorCallback);
+TextArea.openTextView(titleString, confirmButtonString, cancelButtonString, placeHolderString, bodyText, successCallback, errorCallback);
 ```
