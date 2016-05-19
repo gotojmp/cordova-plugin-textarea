@@ -92,16 +92,18 @@
 
 - (void)confirmBtnPressed: (id) sender {
     [self clearoutPlaceholder];
-    [self removeObservers];
+    
+    NSString *sendingString = @"";
+    if (![textView.text isEqualToString:placeHolderString]) {
+        sendingString = [textView.text copy];
+    }
+    NSString *escapeString = [self escapedString:sendingString];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:escapeString];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
+    
     [self.viewController dismissViewControllerAnimated:NO completion:^(void) {
-        NSString *sendingString = @"";
-        if (![textView.text isEqualToString:placeHolderString]) {
-            sendingString = [textView.text copy];
-        }
-        NSString *escapeString = [self escapedString:sendingString];
-        
-        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:escapeString];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
+        //closed
+        [self removeObservers];
     }];
 }
 
