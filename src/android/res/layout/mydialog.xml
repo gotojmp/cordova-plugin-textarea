@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:minWidth="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="取消"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="标题"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:minWidth="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="确认"
+        android:textSize="18sp"
+        android:textColor="#643800" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="#999999"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/confirm" />
+
+    <RelativeLayout
+        android:id="@+id/mydialog"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@null"
+        android:layout_below="@+id/line"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/body"
+            android:inputType="textMultiLine"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@null"
+            android:gravity="top|start"
+            android:padding="15dp"
+            android:layout_above="@+id/actionbar" />
+
+        <LinearLayout
+            android:id="@+id/actionbar"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/image"
+                android:layout_width="36dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/image_choose"
+                android:backgroundTint="#007aff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp"
+                android:text="匿名发布"
+                android:textColor="@android:color/black"
+                android:textAlignment="center" />
+
+            <ToggleButton
+                android:id="@+id/anonymous"
+                android:layout_width="44dp"
+                android:layout_height="27dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_horizontal"
+                android:maxWidth="44dp"
+                android:maxHeight="27dp"
+                android:background="@drawable/toggle_btn"
+                android:checked="false"
+                android:text=""
+                android:textOff=""
+                android:textOn="" />
+
+            <Button
+                android:id="@+id/draft"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:text="存入草稿箱"
+                android:textSize="18sp"
+                android:textColor="#007aff"
+                android:textAlignment="textEnd"
+                android:gravity="end" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
